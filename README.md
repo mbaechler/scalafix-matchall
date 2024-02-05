@@ -2,7 +2,7 @@
 
 A linter to help you avoid wildcard pattern matching.
 
-[![Continuous Integration](https://github.com/daddykotex/scalafix-matchall/actions/workflows/ci.yml/badge.svg)](https://github.com/daddykotex/scalafix-matchall/actions/workflows/ci.yml)
+[![Continuous Integration](https://github.com/mbaechler/scalafix-matchall/actions/workflows/ci.yml/badge.svg)](https://github.com/mbaechler/scalafix-matchall/actions/workflows/ci.yml)
 
 ## Details
 
