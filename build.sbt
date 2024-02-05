@@ -24,7 +24,7 @@ inThisBuild(
 
     githubWorkflowJavaVersions := Seq(JavaSpec.temurin("11"), JavaSpec.temurin("17")),
     githubWorkflowScalaVersions := rulesCrossVersions,
-    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("tests/test"))),
+    githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("compile", "tests/test"))),
   )
 )
 
@@ -53,6 +53,7 @@ lazy val input = projectMatrix
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
+  .settings(githubWorkflowArtifactUpload := false)
 
 lazy val output = projectMatrix
   .settings(
@@ -60,9 +61,11 @@ lazy val output = projectMatrix
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
+  .settings(githubWorkflowArtifactUpload := false)
 
 lazy val testsAggregate = Project("tests", file("target/testsAggregate"))
   .aggregate(tests.projectRefs: _*)
+  .settings(githubWorkflowArtifactUpload := false)
 
 lazy val tests = projectMatrix
   .settings(
@@ -81,7 +84,8 @@ lazy val tests = projectMatrix
     scalafixTestkitInputScalacOptions :=
       TargetAxis.resolve(input, Compile / scalacOptions).value,
     scalafixTestkitInputScalaVersion :=
-      TargetAxis.resolve(input, Compile / scalaVersion).value
+      TargetAxis.resolve(input, Compile / scalaVersion).value ,
+    githubWorkflowArtifactUpload := false
   )
   .defaultAxes(
     rulesCrossVersions.map(VirtualAxis.scalaABIVersion) :+ VirtualAxis.jvm: _*
