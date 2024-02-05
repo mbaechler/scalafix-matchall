@@ -22,9 +22,20 @@ inThisBuild(
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
 
+    githubOwner := "mbaechler",
+    githubRepository := "scalafix-matchall",
+
     githubWorkflowJavaVersions := Seq(JavaSpec.temurin("11"), JavaSpec.temurin("17")),
     githubWorkflowScalaVersions := rulesCrossVersions,
     githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("compile", "tests/test"))),
+    githubWorkflowPublish := Seq(
+      WorkflowStep.Sbt(
+        List("ci-release"),
+        env = Map(
+          "GITHUB_TOKEN" -> "${{ secrets.GITHUB_TOKEN }}",
+        )
+      )
+    )
   )
 )
 

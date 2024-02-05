@@ -113,5 +113,6 @@ jobs:
           tar xf targets.tar
           rm targets.tar
 
-      - name: Publish project
-        run: sbt +publish
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: sbt ci-release
