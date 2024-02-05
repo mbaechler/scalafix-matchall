@@ -1,6 +1,7 @@
+
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
-lazy val rulesCrossVersions = Seq(V.scala213, V.scala212, V.scala211)
+lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
 lazy val scala3Version = "3.0.1"
 
 inThisBuild(
@@ -21,7 +22,7 @@ inThisBuild(
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
 
-    githubWorkflowJavaVersions := Seq("adopt@1.8", "adopt@1.11", "adopt@1.15"),
+    githubWorkflowJavaVersions := Seq(JavaSpec.temurin("11"), JavaSpec.temurin("17")),
     githubWorkflowScalaVersions := rulesCrossVersions,
     githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("tests/test"))),
   )
@@ -98,11 +99,6 @@ lazy val tests = projectMatrix
   .customRow(
     scalaVersions = Seq(V.scala212),
     axisValues = Seq(TargetAxis(V.scala212), VirtualAxis.jvm),
-    settings = Seq()
-  )
-  .customRow(
-    scalaVersions = Seq(V.scala211),
-    axisValues = Seq(TargetAxis(V.scala211), VirtualAxis.jvm),
     settings = Seq()
   )
   .dependsOn(rules)
