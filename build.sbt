@@ -24,7 +24,6 @@ inThisBuild(
     githubWorkflowJavaVersions := Seq("adopt@1.8", "adopt@1.11", "adopt@1.15"),
     githubWorkflowScalaVersions := rulesCrossVersions,
     githubWorkflowBuild := Seq(WorkflowStep.Sbt(List("tests/test"))),
-    githubWorkflowPublishTargetBranches := Nil
   )
 )
 
